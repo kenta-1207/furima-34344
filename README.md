@@ -2,14 +2,16 @@
 
 ## users テーブル
 
-| Column    | Type    |  Options    |
-|-----------|---------|-------------|
-| nickname  | string  | null: false |
-| email     | string  | null: false |
-| password  | string  | null: false |
-| name      | string  | null: false |
-| name_ruby | string  | null: false |
-| birthday  | string  | null: false |
+| Column                    | Type   |  Options                  |
+|---------------------------|--------|---------------------------|
+| nickname                  | string | null: false               |
+| email                     | string | null: false, unique: true |
+| encrypted_password        | string | null: false               |
+| last_name                 | string | null: false               |
+| first_name                | string | null: false               |
+| last_name_ruby            | string | null: false               |
+| first_name_ruby           | string | null: false               |
+| birthday                  | date   | null: false               |
 
 ### Association
 
@@ -17,55 +19,54 @@
 - has_many :purchases
 - has_many :comments
 
-
 ## items テーブル
 
-| Column           | Type           |  Options    |
-|------------------|----------------|-------------|
-| item_name        | string         | null: false |
-| image            | Active_storage | null: false |
-| item_description | text           | null: false |
-| category         | string         | null: false |
-| item_status      | string         | null: false |
-| delivery_charge  | string         | null: false |
-| shipping_area    | string         | null: false |
-| shipping_days    | string         | null: false |
-| price            | string         | null: false |
-| user             | references     |             |
+| Column             | Type           |  Options          |
+|--------------------|----------------|-------------------|
+| name               | string         | null: false       |
+| description        | text           | null: false       |
+| category_id        | integer        | null: false       |
+| item_status_id     | integer        | null: false       |
+| delivery_charge_id | integer        | null: false       |
+| prefecture_id      | integer        | null: false       |
+| shipping_day_id   | integer         | null: false       |
+| price              | integer        | null: false       |
+| user               | references     | foreign_key: true |
 
 ### Association
 
 - belongs_to :user
 - has_many :comments
+- has_one :purchase
 
 ## purchases テーブル
 
-| Column          | Type       | Option      |
-|-----------------|------------|-------------|
-| card_number     | string     | null: false |
-| expiration_date | string     | null: false |
-| security_code   | string     | null: false |
-| item            | references |             |
+| Column          | Type       | Option            |
+|-----------------|------------|-------------------|
+| item            | references | foreign_key: true |
+| user            | references | foreign_key: true |
 
 ### Association
 
-- has_one :shipping_addresses
+- has_one :shipping_address
 - belongs_to :user
+- belongs_to :item
 
-## shipping_addresses テーブル
+## shipping_address テーブル
 
-| Column         | Type   | Options     |
-|----------------|--------|-------------|
-| postal_code    | string | null: false |
-| prefectures    | string | null: false |
-| municipalities | string | null: false |
-| address        | string | null: false |
-| building_name  | string | null: false |
-| phone_number   | string | null: false |
+| Column         | Type        | Options           |
+|----------------|-------------|-------------------|
+| postal_code    | string      | null: false       |
+| prefecture_id  | integer     | null: false       |
+| municipalities | string      | null: false       |
+| address        | string      | null: false       |
+| building_name  | string      |                   |
+| phone_number   | string      | null: false       |
+| purchase       | references  | foreign_key: true |
 
 ### Association
 
-- belongs_to :purchases
+- belongs_to :purchase
 
 ## comments テーブル
 
