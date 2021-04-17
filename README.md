@@ -1,24 +1,81 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column    | Type    |  Options    |
+|-----------|---------|-------------|
+| nickname  | string  | null: false |
+| email     | string  | null: false |
+| password  | string  | null: false |
+| name      | string  | null: false |
+| name_ruby | string  | null: false |
+| birthday  | string  | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :purchases
+- has_many :comments
 
-* Configuration
 
-* Database creation
+## items テーブル
 
-* Database initialization
+| Column           | Type           |  Options    |
+|------------------|----------------|-------------|
+| item_name        | string         | null: false |
+| image            | Active_storage | null: false |
+| item_description | text           | null: false |
+| category         | string         | null: false |
+| item_status      | string         | null: false |
+| delivery_charge  | string         | null: false |
+| shipping_area    | string         | null: false |
+| shipping_days    | string         | null: false |
+| price            | string         | null: false |
+| user             | references     |             |
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :user
+- has_many :comments
 
-* Deployment instructions
+## purchases テーブル
 
-* ...
+| Column          | Type       | Option      |
+|-----------------|------------|-------------|
+| card_number     | string     | null: false |
+| expiration_date | string     | null: false |
+| security_code   | string     | null: false |
+| item            | references |             |
+
+### Association
+
+- has_one :shipping_addresses
+- belongs_to :user
+
+## shipping_addresses テーブル
+
+| Column         | Type   | Options     |
+|----------------|--------|-------------|
+| postal_code    | string | null: false |
+| prefectures    | string | null: false |
+| municipalities | string | null: false |
+| address        | string | null: false |
+| building_name  | string | null: false |
+| phone_number   | string | null: false |
+
+### Association
+
+- belongs_to :purchases
+
+## comments テーブル
+
+| Column | Type       | Options     |
+|--------|------------|-------------|
+| text   | text       | null: false |
+| user   | references |             |
+| item   | references |             |
+
+### Association
+
+- belongs_to :items
+- belongs_to :user
