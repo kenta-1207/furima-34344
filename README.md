@@ -2,14 +2,16 @@
 
 ## users テーブル
 
-| Column    | Type    |  Options    |
-|-----------|---------|-------------|
-| nickname  | string  | null: false |
-| email     | string  | null: false |
-| password  | string  | null: false |
-| name      | string  | null: false |
-| name_ruby | string  | null: false |
-| birthday  | string  | null: false |
+| Column          | Type   |  Options     |
+|-----------------|--------|--------------|
+| nickname        | string | null: false  |
+| email           | string | unique: true |
+| password        | string | null: false  |
+| last_name       | string | null: false  |
+| first_name      | string | null: false  |
+| last_name_ruby  | string | null: false  |
+| first_name_ruby | string | null: false  |
+| birthday        | date   | null: false  |
 
 ### Association
 
@@ -19,37 +21,35 @@
 
 ## items テーブル
 
-| Column           | Type           |  Options    |
-|------------------|----------------|-------------|
-| item_name        | string         | null: false |
-| image            | Active_storage | null: false |
-| item_description | text           | null: false |
-| category         | string         | null: false |
-| item_status      | string         | null: false |
-| delivery_charge  | string         | null: false |
-| shipping_area    | string         | null: false |
-| shipping_days    | string         | null: false |
-| price            | string         | null: false |
-| user             | references     |             |
+| Column             | Type           |  Options    |
+|--------------------|----------------|-------------|
+| item_name          | string         | null: false |
+| item_description   | text           | null: false |
+| category_id        | integer        | null: false |
+| item_status_id     | integer        | null: false |
+| delivery_charge_id | integer        | null: false |
+| shipping_area_id   | integer        | null: false |
+| shipping_days_id   | integer        | null: false |
+| price              | string         | null: false |
+| user               | references     |             |
 
 ### Association
 
 - belongs_to :user
 - has_many :comments
+- has_one :purchase
 
 ## purchases テーブル
 
 | Column          | Type       | Option      |
 |-----------------|------------|-------------|
-| card_number     | string     | null: false |
-| expiration_date | string     | null: false |
-| security_code   | string     | null: false |
 | item            | references |             |
 
 ### Association
 
 - has_one :shipping_addresses
 - belongs_to :user
+- belongs_to :item
 
 ## shipping_addresses テーブル
 
@@ -59,7 +59,7 @@
 | prefectures    | string | null: false |
 | municipalities | string | null: false |
 | address        | string | null: false |
-| building_name  | string | null: false |
+| building_name  | string |             |
 | phone_number   | string | null: false |
 
 ### Association
