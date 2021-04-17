@@ -17,7 +17,6 @@
 - has_many :purchases
 - has_many :comments
 
-
 ## items テーブル
 
 | Column           | Type           |  Options    |
