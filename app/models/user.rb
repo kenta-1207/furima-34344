@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :birthday, presence: true
   validates :password,confirmation: true
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-  validates_format_of :password, with: PASSWORD_REGEX
+  validates :password, format: {with: PASSWORD_REGEX}, allow_blank: true
   with_options presence: true, format: { with: /\A[ぁ-ゔァ-ヴ\p{Ideographic}ａ-ｚＡ-Ｚ０-９]+\z/} do
   end
 end
