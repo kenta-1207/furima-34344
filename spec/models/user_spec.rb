@@ -135,7 +135,7 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('First name is invalid')
       end
 
-      it 'first_name_rubyがカタカナ出ないと登録出来ないこと' do
+      it 'first_name_rubyがカタカナでないと登録出来ないこと' do
         @user.first_name_ruby = 'aaa'
         @user.valid?
         expect(@user.errors.full_messages).to include('First name ruby is invalid')
