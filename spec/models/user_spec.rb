@@ -134,6 +134,36 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('First name ruby is invalid')
       end
+
+      it 'password:半角英語のみは登録できない' do
+        @user.password = 'aaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password is invalid')
+      end
+
+      it 'password:全角英数混合は登録できない' do
+        @user.password = '１１１ａａａ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password is invalid')
+      end
+
+      it 'password:数字のみは登録できない' do
+        @user.password = '111111'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password is invalid')
+      end
+
+      it '性：全角（漢字・ひらがな・カタカナ）以外は登録できない' do
+        @user.last_name = '{/\A[-]?[0-9]+(\.[0-9]+)?\z/}'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Last name is invalid')
+      end
+
+      it '名：全角（漢字・ひらがな・カタカナ）以外は」登録できない' do
+        @user.first_name = '{/\A[-]?[0-9]+(\.[0-9]+)?\z/}'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('First name is invalid')
+      end
     end
   end
 end
