@@ -9,9 +9,8 @@
   </div>
 
   
-  <%= form_for(@user, url: user_registration_path) do |f| %>
+  <%= (@user, url: user_registration_path) %>
     <%= render 'shared/error_messages', model: f.object %>
-  <% end %>
   
 
   <div class="form-group">
