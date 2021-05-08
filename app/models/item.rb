@@ -17,8 +17,11 @@ class Item < ApplicationRecord
     validates :shipping_day_id
   end
 
-  validates :name, presence: true
-  validates :description, presence: true
+  with_options presence: true do
+    validates :description
+    validates :name
+  end
+  
   validates :price, numericality: {only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is invalid"}, allow_blank: true
   validates :price, presence: true
   
