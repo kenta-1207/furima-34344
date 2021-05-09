@@ -20,11 +20,12 @@ class Item < ApplicationRecord
   with_options presence: true do
     validates :description
     validates :name
+    validates :image, presence: true
+    validates :price, presence: true
+
   end
   
   validates :price, numericality: {only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is invalid"}, allow_blank: true
-  validates :price, presence: true
-  
-  validates :image, presence: true
+   
 end
 
