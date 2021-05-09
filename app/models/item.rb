@@ -20,8 +20,8 @@ class Item < ApplicationRecord
   with_options presence: true do
     validates :description
     validates :name
-    validates :image, presence: true
-    validates :price, presence: true
+    validates :image
+    validates :price
 
   end
   
