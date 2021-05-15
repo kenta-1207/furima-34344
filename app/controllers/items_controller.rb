@@ -29,11 +29,13 @@ class ItemsController < ApplicationController
   end
 
   def update
-     @item = Item.find(params[:id])
   if @item.update(item_params)
       redirect_to item_path
     else
       render :edit
+    end
+    unless @item.user_id = current_user.id
+      redirect_to action: :index
     end
   end
 
