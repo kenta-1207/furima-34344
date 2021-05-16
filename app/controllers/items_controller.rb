@@ -53,7 +53,6 @@ class ItemsController < ApplicationController
   end
 
   def redirect_index
-    @item = Item.find(params[:id])
     unless @item.user_id == current_user.id
       redirect_to action: :index
     end
