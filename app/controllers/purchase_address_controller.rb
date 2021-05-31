@@ -1,6 +1,7 @@
 class PurchaseAddressController < ApplicationController
   before_action :set_item, only: [:index, :create, :redirect_index]
-  before_action :redirect_index
+  before_action :redirect_signed_in?
+  before_action :redirect_root, only: [:index]
 
   def index
     @purchase_address = PurchaseAddress.new
@@ -27,9 +28,15 @@ class PurchaseAddressController < ApplicationController
     )
     end
 
-    def redirect_index
+    def redirect_root
       if @item.user_id == current_user.id
         redirect_to root_path
+      end
+    end
+
+    def redirect_signed_in?
+      unless user_signed_in?
+        redirect_to user_session_path
       end
     end
 
