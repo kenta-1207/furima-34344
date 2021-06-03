@@ -9,6 +9,10 @@ class PurchaseAddress
     validates :municipalities
     validates :address
     validates :phone_number, format: {with: /\A[0-9]{,11}+\z/}
+    validates :user_id
+    validates :item_id
+    validates :purchase_id
+    validates :token
   end
 
   def save
