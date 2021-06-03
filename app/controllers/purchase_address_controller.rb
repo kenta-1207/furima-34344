@@ -2,6 +2,7 @@ class PurchaseAddressController < ApplicationController
   before_action :set_item, only: [:index, :create, :redirect_index]
   before_action :redirect_signed_in?
   before_action :redirect_root, only: [:index]
+  before_action :duplicate_purchase
 
   def index
     @purchase_address = PurchaseAddress.new
@@ -42,6 +43,12 @@ class PurchaseAddressController < ApplicationController
 
     def set_item
       @item = Item.find(params[:item_id])
+    end
+
+    def duplicate_purchase
+      if @item.purchase.present?
+        redirect_to root_path
+      end
     end
 
   private
