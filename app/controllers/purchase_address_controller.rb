@@ -1,8 +1,8 @@
 class PurchaseAddressController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_item, only: [:index, :create, :redirect_index]
-  before_action :redirect_signed_in?
   before_action :redirect_root, only: [:index]
-  before_action :duplicate_purchase
+  before_action :duplicate_purchase, only: [:index]
 
   def index
     @purchase_address = PurchaseAddress.new
@@ -11,6 +11,9 @@ class PurchaseAddressController < ApplicationController
 
   def create
     @purchase_address = PurchaseAddress.new(purchase_params)
+  if @item.user_id == current_user.id
+    redirect_to root_path
+  end
   if @purchase_address.valid?
      pay_item
      @purchase_address.save
@@ -19,6 +22,8 @@ class PurchaseAddressController < ApplicationController
       render :index
     end
   end
+
+  
 
     def pay_item
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
@@ -32,12 +37,6 @@ class PurchaseAddressController < ApplicationController
     def redirect_root
       if @item.user_id == current_user.id
         redirect_to root_path
-      end
-    end
-
-    def redirect_signed_in?
-      unless user_signed_in?
-        redirect_to user_session_path
       end
     end
 

@@ -4,16 +4,17 @@ class PurchaseAddress
 
   with_options presence: true do
     validates :postal_code
-    validates :postal_code, format: {with: /\A\d{3}[-]\d{4}\z/ }, allow_blank: true
     validates :prefecture_id, numericality: { other_than: 1 }
     validates :municipalities
     validates :address
-    validates :phone_number, format: {with: /\A[0-9]{,11}+\z/}
+    validates :phone_number, format: {with: /\A[0-9]{10,11}+\z/}
     validates :user_id
     validates :item_id
-    validates :purchase_id
     validates :token
   end
+
+    VALID_POSTALCODE_REGEX = /\A\d{3}[-]\d{4}\z/
+    validates :postal_code, format: {with: VALID_POSTALCODE_REGEX }, allow_blank: true
 
   def save
 
