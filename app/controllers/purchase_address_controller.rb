@@ -2,7 +2,6 @@ class PurchaseAddressController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
   before_action :redirect_root, only: [:index, :create]
-  before_action :duplicate_purchase, only: [:index]
 
   def index
     @purchase_address = PurchaseAddress.new
