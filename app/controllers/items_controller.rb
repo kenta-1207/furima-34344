@@ -43,12 +43,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  def sold_out_no_edit
-    if @item.purchase.present?
-      redirect_to root_path
-    end
-  end
-
   private
 
   def item_params
@@ -60,7 +54,7 @@ class ItemsController < ApplicationController
   end
 
   def redirect_index
-    unless @item.user_id == current_user.id
+    unless @item.user_id == current_user.id && @item.purchase.present?
       redirect_to action: :index
     end
   end
