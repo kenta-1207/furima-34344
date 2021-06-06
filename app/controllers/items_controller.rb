@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
   end
 
   def redirect_index
-    unless @item.user_id == current_user.id
+    unless @item.user_id == current_user.id && @item.purchase.blank?
       redirect_to action: :index
     end
   end
