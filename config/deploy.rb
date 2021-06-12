@@ -1,4 +1,4 @@
-lock 'capistrano (3.16.0)'
+lock '3.16.0'
 
 set :application, 'furima-34344'
 
